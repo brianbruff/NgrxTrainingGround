@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import {UserManagementModule} from './user-management/user-management.module';
 import {StoreModule} from "@ngrx/store";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import * as fromUsers from './user-management/reducers/user.reducers';
+import {reducers} from "./reducers";
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import * as fromUsers from './user-management/reducers/user.reducers';
     imports: [
         BrowserModule,
         UserManagementModule,
-        StoreModule.forRoot(fromUsers.UserReducer),
+        StoreModule.forRoot(reducers),
         StoreDevtoolsModule.instrument({
           maxAge: 25
         })

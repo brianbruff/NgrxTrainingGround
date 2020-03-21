@@ -17,7 +17,7 @@ import {UserReducer} from "./reducers/user.reducers";
     ],
     imports: [
         CommonModule,
-        StoreModule.forFeature('user', UserReducer)
+        StoreModule.forFeature('users', UserReducer)
 
     ]
 })

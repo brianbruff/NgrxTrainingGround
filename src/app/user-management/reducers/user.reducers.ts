@@ -41,11 +41,6 @@ const defaultUser = {
 export const initialState: State = adapter.getInitialState(defaultUser);
 
 
-// export const reducers: ActionReducerMap<any> = {
-//   users : UserReducer
-// }
-//
-
 const userReducers = createReducer(
   initialState,
   on(UserActions.addUser, (state, { user }) => {
@@ -94,7 +89,7 @@ export function UserReducer(state: State | undefined, action: Action) {
 }
 
 // selectors
-export const getUserState =  createFeatureSelector<UserModel>('user');
+export const getUserState =  createFeatureSelector<State>('users');
 
 
 // get the selectors
@@ -103,7 +98,7 @@ const {
   selectEntities,
   selectAll,
   selectTotal,
-} = adapter.getSelectors();
+} = adapter.getSelectors(getUserState);
 
 // select the array of user ids
 export const selectUserIds = selectIds;
