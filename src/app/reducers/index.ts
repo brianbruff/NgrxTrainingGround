@@ -1,7 +1,9 @@
-import {ActionReducerMap} from "@ngrx/store/src/models";
-import {UserReducer} from "../user-management/reducers/user.reducers";
+import {ActionReducerMap} from '@ngrx/store/src/models';
+import {userReducer} from '../user-management/reducers/user.reducers';
+import {companyReducer} from '../user-management/reducers/company.reducers';
 
 
 export const reducers: ActionReducerMap<any> = {
-  users: UserReducer
-}
+  users: userReducer,
+  companies: companyReducer
+};

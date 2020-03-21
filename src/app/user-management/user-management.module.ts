@@ -6,7 +6,7 @@ import { UsersComponent } from './users/users.component';
 import { WorkgroupsComponent } from './workgroups/workgroups.component';
 import { PoliciesComponent } from './policies/policies.component';
 import {StoreModule} from "@ngrx/store";
-import {UserReducer} from "./reducers/user.reducers";
+import {userReducer} from "./reducers/user.reducers";
 
 
 
@@ -17,7 +17,7 @@ import {UserReducer} from "./reducers/user.reducers";
     ],
     imports: [
         CommonModule,
-        StoreModule.forFeature('users', UserReducer)
+        StoreModule.forFeature('users', userReducer)
 
     ]
 })

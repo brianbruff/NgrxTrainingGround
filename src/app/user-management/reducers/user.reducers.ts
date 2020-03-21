@@ -2,7 +2,6 @@ import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
 import {Action, createFeatureSelector, createReducer, on} from '@ngrx/store';
 import {UserModel} from '../models/user.model';
 import * as UserActions from '../actions/user.actions';
-import {ActionReducerMap} from "@ngrx/store/src/models";
 
 
 
@@ -84,7 +83,7 @@ const userReducers = createReducer(
   })
 );
 
-export function UserReducer(state: State | undefined, action: Action) {
+export function userReducer(state: State | undefined, action: Action) {
   return userReducers(state, action);
 }
 
