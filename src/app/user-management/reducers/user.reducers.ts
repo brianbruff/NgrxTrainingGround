@@ -1,23 +1,20 @@
 import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
-import {Action, createReducer, on} from '@ngrx/store';
+import {Action, createFeatureSelector, createReducer, on} from '@ngrx/store';
 import {UserModel} from '../models/user.model';
 import * as UserActions from '../actions/user.actions';
+import {ActionReducerMap} from "@ngrx/store/src/models";
 
 
-export interface State extends EntityState<UserModel> {
-  selectedUserId: number | null;
-}
 
 
+// Adapter
 export function selectUserId(a: UserModel): string {
   return a.id;
 }
 
-
 export function sortByName(a: UserModel, b: UserModel): number {
   return a.name.localeCompare(b.name);
 }
-
 
 export const adapter: EntityAdapter<UserModel> = createEntityAdapter<UserModel>({
   selectId: selectUserId,
@@ -25,14 +22,31 @@ export const adapter: EntityAdapter<UserModel> = createEntityAdapter<UserModel>(
 });
 
 
-export const initialState: State = adapter.getInitialState({
-  // additional entity state properties
+// State
+export interface State extends EntityState<UserModel> {
+  selectedUserId: number | null;
+}
+
+const defaultUser = {
+  ids: ['123'],
+  entities: {
+    '123': {
+      id: '123',
+      name: 'brian'
+    }
+  },
   selectedUserId: null
-});
+}
+
+export const initialState: State = adapter.getInitialState(defaultUser);
 
 
+// export const reducers: ActionReducerMap<any> = {
+//   users : UserReducer
+// }
+//
 
-const userReducer = createReducer(
+const userReducers = createReducer(
   initialState,
   on(UserActions.addUser, (state, { user }) => {
     return adapter.addOne(user, state);
@@ -75,9 +89,12 @@ const userReducer = createReducer(
   })
 );
 
-export function reducer(state: State | undefined, action: Action) {
-  return userReducer(state, action);
+export function UserReducer(state: State | undefined, action: Action) {
+  return userReducers(state, action);
 }
+
+// selectors
+export const getUserState =  createFeatureSelector<UserModel>('user');
 
 
 // get the selectors

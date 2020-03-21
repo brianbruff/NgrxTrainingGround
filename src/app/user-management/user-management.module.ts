@@ -5,6 +5,8 @@ import { CompaniesComponent } from './companies/companies.component';
 import { UsersComponent } from './users/users.component';
 import { WorkgroupsComponent } from './workgroups/workgroups.component';
 import { PoliciesComponent } from './policies/policies.component';
+import {StoreModule} from "@ngrx/store";
+import {UserReducer} from "./reducers/user.reducers";
 
 
 
@@ -14,7 +16,9 @@ import { PoliciesComponent } from './policies/policies.component';
         UserManagementPageComponent
     ],
     imports: [
-        CommonModule
+        CommonModule,
+        StoreModule.forFeature('user', UserReducer)
+
     ]
 })
 export class UserManagementModule { }

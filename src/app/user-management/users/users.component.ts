@@ -1,47 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ActionReducerMap, createFeatureSelector, createSelector} from '@ngrx/store';
-
-import * as fromUser from '../reducers/user.reducer';
-
-
-
-export interface State {
-  users: fromUser.State;
-}
-
-export const reducers: ActionReducerMap<State> = {
-  users: fromUser.reducer,
-};
-
-export const selectUserState = createFeatureSelector<fromUser.State>('users');
-
-export const selectUserIds = createSelector(
-  selectUserState,
-  fromUser.selectUserIds // shorthand for usersState => fromUser.selectUserIds(usersState)
-);
-export const selectUserEntities = createSelector(
-  selectUserState,
-  fromUser.selectUserEntities
-);
-export const selectAllUsers = createSelector(
-  selectUserState,
-  fromUser.selectAllUsers
-);
-export const selectUserTotal = createSelector(
-  selectUserState,
-  fromUser.selectUserTotal
-);
-export const selectCurrentUserId = createSelector(
-  selectUserState,
-  userState => userState.selectedUserId
-);
-
-export const selectCurrentUser = createSelector(
-  selectUserEntities,
-  selectCurrentUserId,
-  (userEntities, userId) => userEntities[userId]
-);
-
+import {Observable} from "rxjs";
+import {UserModel} from "../models/user.model";
+import {Store} from "@ngrx/store";
+import * as fromUsers from '../reducers/user.reducers';
+import * as userActions from '../actions/user.actions';
 
 @Component({
   selector: 'app-users',
@@ -50,9 +12,24 @@ export const selectCurrentUser = createSelector(
 })
 export class UsersComponent implements OnInit {
 
-  constructor() { }
+  users$ : Observable<UserModel[]>;
+
+  constructor(private store: Store<fromUsers.State>) { }
 
   ngOnInit(): void {
+    this.users$ = this.store.select(fromUsers.selectAllUsers)
   }
 
+
+  createUser() {
+    const id = new Date().getUTCMilliseconds().toString()
+    const user: UserModel = {
+      id,
+      name: 'test' + id
+    }
+
+    this.store.dispatch(userActions.addUser({user: user}))
+
+
+  }
 }

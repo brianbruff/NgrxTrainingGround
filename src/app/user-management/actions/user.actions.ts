@@ -19,3 +19,6 @@ export const deleteUsers = createAction('[UserModel/API] Delete Users', props<{ 
 export const deleteUsersByPredicate = createAction(
   '[UserModel/API] Delete Users By Predicate', props<{ predicate: Predicate<UserModel> }>());
 export const clearUsers = createAction('[UserModel/API] Clear Users');
+
+
+
