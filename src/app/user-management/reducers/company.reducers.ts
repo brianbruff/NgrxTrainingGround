@@ -23,7 +23,7 @@ export const adapter: EntityAdapter<CompanyModel> = createEntityAdapter<CompanyM
 
 // State
 export interface State extends EntityState<CompanyModel> {
-  selectedUserId: number | null;
+  selectedCompanyId: number | null;
 }
 
 const defaultCompany = {
@@ -34,7 +34,7 @@ const defaultCompany = {
       name: 'brian'
     }
   },
-  selectedUserId: null
+  selectedCompanyId: null
 }
 
 export const initialState: State = adapter.getInitialState(defaultCompany);
@@ -64,7 +64,7 @@ const companyReducers = createReducer(
     return adapter.addAll(companies, state);
   }),
   on(CompanyActions.clearCompanies, state => {
-    return adapter.removeAll({ ...state, selectedUserId: null });
+    return adapter.removeAll({ ...state, selectedCompanyId: null });
   })
 );
 
@@ -72,26 +72,3 @@ export function companyReducer(state: State | undefined, action: Action) {
   return companyReducers(state, action);
 }
 
-// selectors
-export const getCompanyState =  createFeatureSelector<State>('companies');
-
-
-// get the selectors
-const {
-  selectIds,
-  selectEntities,
-  selectAll,
-  selectTotal,
-} = adapter.getSelectors(getCompanyState);
-
-// select the array of user ids
-export const selectCompanyIds = selectIds;
-
-// select the dictionary of user entities
-export const selectCompanyEntities = selectEntities;
-
-// select the array of users
-export const selectAllCompanies = selectAll;
-
-// select the total user count
-export const selectCompanyTotal = selectTotal;
